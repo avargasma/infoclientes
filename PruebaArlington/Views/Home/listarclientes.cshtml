@@ -1,0 +1,45 @@
+﻿<script src="~/Scripts/Angular/Controllers/ListaClientesController.js"></script>
+<script src="~/Scripts/Angular/Services/ListaClientesService.js"></script>
+
+@{
+    ViewBag.Title = "InfoCliente | Lista Clientes";
+}
+
+<div  style="padding-top:10%" ng-controller="CtrlListaClientes">
+    <h2 class="tituloFormulario">Lista de clientes existentes</h2>
+    <br />
+    <div class="precarga" ng-hide="clientes">
+        <i class="fa fa-refresh fa-spin fa-5x"></i>
+    </div>
+    <div ng-show="clientes">
+        <input type="search" ng-model="buscador" class="form-control" placeholder="Digite cualquier criterio de busqueda"> <br>
+        <div class="col-sm-12">
+            <div class="col-sm-2"><h4 class="display-4">Nit</h4></div>
+            <div class="col-sm-3"><h4 class="display-4">Nombre completo</h4></div>
+            <div class="col-sm-2"><h4 class="display-4">Dirección</h4></div>
+            <div class="col-sm-1"><h4 class="display-4">Teléfono</h4></div>
+            <div class="col-sm-1"><h4 class="display-4">Municipio</h4></div>
+            <div class="col-sm-1"><h4 class="display-4">Cupo</h4></div>
+            <div class="col-sm-1"><h4 class="display-4">Saldo</h4></div>
+            <div class="col-sm-1"><h4 class="display-4">%Visitas</h4></div>
+        </div>
+        <hr />
+        <div ng-repeat="cliente in clientes | filter:buscador" class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-2" ng-bind="cliente.ClNIt"></div>
+                <div class="col-sm-3" ng-bind="cliente.ClNombresApe"></div>
+                <div class="col-sm-2" ng-bind="cliente.ClDireccion"></div>
+                <div class="col-sm-1" ng-bind="cliente.ClTel"></div>
+                <div class="col-sm-1" ng-bind="cliente.MnIdMunicipio"></div>
+                <div class="col-sm-1" ng-bind="cliente.ClCupo"></div>
+                <div class="col-sm-1" ng-bind="cliente.ClSaldoCupo"></div>
+                <div class="col-sm-1" ng-bind="cliente.ClPorceVisitas"></div>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+</div>
+
+
+

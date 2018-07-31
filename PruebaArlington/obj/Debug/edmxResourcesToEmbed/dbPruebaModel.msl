@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbPruebaModelStoreContainer" CdmEntityContainer="dbPruebaEntidad">
+    <EntitySetMapping Name="Productos">
+      <EntityTypeMapping TypeName="dbPruebaModel.Productos">
+        <MappingFragment StoreEntitySet="Productos">
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="CodProd" ColumnName="CodProd" />
+          <ScalarProperty Name="NomProd" ColumnName="NomProd" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Existencia" ColumnName="Existencia" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="FechaMod" ColumnName="FechaMod" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

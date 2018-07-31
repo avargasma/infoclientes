@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InfoClientesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="DpCodDpto" />
+    </Key>
+    <Property Name="DpPais" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DpCodDpto" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DpNomDpto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Municipio">
+    <Key>
+      <PropertyRef Name="MnIdMunicipio" />
+    </Key>
+    <Property Name="MnDepartamento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MnIdMunicipio" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MnCodMunicipio" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MnNombreMunicipio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pais">
+    <Key>
+      <PropertyRef Name="PsCodPais" />
+    </Key>
+    <Property Name="PsCodPais" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PsNomPais" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PsCodIso" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Vendedor">
+    <Key>
+      <PropertyRef Name="VdDocumento" />
+    </Key>
+    <Property Name="VdDocumento" Type="Int64" Nullable="false" />
+    <Property Name="VdNombresApe" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VdFechaCrea" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="VdDireccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VdTelefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Visitas" Relationship="InfoClientesModel.FK_Visitas_Vendedor" FromRole="Vendedor" ToRole="Visitas" />
+  </EntityType>
+  <EntityContainer Name="dbInfoClientes" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Departamento" EntityType="Self.Departamento" />
+    <EntitySet Name="Municipio" EntityType="Self.Municipio" />
+    <EntitySet Name="Pais" EntityType="Self.Pais" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Vendedor" EntityType="Self.Vendedor" />
+    <EntitySet Name="Clientes" EntityType="InfoClientesModel.Clientes" />
+    <EntitySet Name="CuposCliente" EntityType="InfoClientesModel.CuposCliente" />
+    <AssociationSet Name="FK_CuposCliente_Clientes" Association="InfoClientesModel.FK_CuposCliente_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="CuposCliente" EntitySet="CuposCliente" />
+    </AssociationSet>
+    <EntitySet Name="Visitas" EntityType="InfoClientesModel.Visitas" />
+    <AssociationSet Name="FK_Visitas_Clientes" Association="InfoClientesModel.FK_Visitas_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Visitas" EntitySet="Visitas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitas_Vendedor" Association="InfoClientesModel.FK_Visitas_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Visitas" EntitySet="Visitas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="ClNIt" />
+    </Key>
+    <Property Name="ClNIt" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="false" />
+    <Property Name="ClNombresApe" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="ClDireccion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ClTel" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="MnIdMunicipio" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="ClCupo" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="ClSaldoCupo" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="ClPorceVisitas" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="CuposCliente" Relationship="InfoClientesModel.FK_CuposCliente_Clientes" FromRole="Clientes" ToRole="CuposCliente" />
+    <NavigationProperty Name="Visitas" Relationship="InfoClientesModel.FK_Visitas_Clientes" FromRole="Clientes" ToRole="Visitas" />
+  </EntityType>
+  <EntityType Name="CuposCliente">
+    <Key>
+      <PropertyRef Name="CcSec" />
+    </Key>
+    <Property Name="CcSec" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CcClNit" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="false" />
+    <Property Name="CcValor" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="CcFecha" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Clientes" Relationship="InfoClientesModel.FK_CuposCliente_Clientes" FromRole="CuposCliente" ToRole="Clientes" />
+  </EntityType>
+  <Association Name="FK_CuposCliente_Clientes">
+    <End Type="InfoClientesModel.Clientes" Role="Clientes" Multiplicity="1" />
+    <End Type="InfoClientesModel.CuposCliente" Role="CuposCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="ClNIt" />
+      </Principal>
+      <Dependent Role="CuposCliente">
+        <PropertyRef Name="CcClNit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Visitas">
+    <Key>
+      <PropertyRef Name="VsSec" />
+    </Key>
+    <Property Name="VsSec" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VsFeha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="VsValorNeto" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="VsValorVisita" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="VsObservacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ClNit" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="false" />
+    <Property Name="VdDocumento" Type="Int64" Nullable="false" />
+    <Property Name="VsIdMuni" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Clientes" Relationship="InfoClientesModel.FK_Visitas_Clientes" FromRole="Visitas" ToRole="Clientes" />
+    <NavigationProperty Name="Vendedor" Relationship="InfoClientesModel.FK_Visitas_Vendedor" FromRole="Visitas" ToRole="Vendedor" />
+  </EntityType>
+  <Association Name="FK_Visitas_Clientes">
+    <End Type="InfoClientesModel.Clientes" Role="Clientes" Multiplicity="1" />
+    <End Type="InfoClientesModel.Visitas" Role="Visitas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="ClNIt" />
+      </Principal>
+      <Dependent Role="Visitas">
+        <PropertyRef Name="ClNit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitas_Vendedor">
+    <End Type="InfoClientesModel.Vendedor" Role="Vendedor" Multiplicity="1" />
+    <End Type="InfoClientesModel.Visitas" Role="Visitas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VdDocumento" />
+      </Principal>
+      <Dependent Role="Visitas">
+        <PropertyRef Name="VdDocumento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title> 
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Angular/Module.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <link rel="stylesheet" type="text/css" href="~/Content/dx.spa.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/dx.common.css" />
+    <link rel="dx-theme" data-theme="generic.light" href="~/Content/dx.light.css" />
+    <script src="~/Scripts/jszip.min.js"></script>
+    <script src="~/Scripts/dx.all.js"></script>
+    <script src="~/Scripts/Angular/data.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("InfoClientes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Inicio", "Index", "Home")</li>			
+					
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Clientes<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Agregar/Editar cliente", "aggcliente", "Home")</li>
+                            <li>@Html.ActionLink("Listar clientes", "listarclientes", "Home")</li>
+                            <li>@Html.ActionLink("Registrar visita de cliente", "regvisita", "Home")</li>
+                        </ul>
+                    </li>	
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cupos<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Agregar cupo a clientes", "AgregarCupo", "Home")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Parametros<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Pasies", "paises", "Home")</li>
+                            <li>@Html.ActionLink("Departamentos", "departamentos", "Home")</li>
+                            <li>@Html.ActionLink("Municipios", "municipios", "Home")</li>
+                        </ul>
+                    </li>	
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Informe de visitas por ciudad", "rptvisitasporciudad", "Home")</li>
+                            <li>@Html.ActionLink("Informe de vistas por cliente", "movxcliente", "Home")</li>                            
+                        </ul>
+                    </li>				
+				</ul>               
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Arlington Vargas</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

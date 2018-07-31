@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InfoClientesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="InfoClientesModelStoreContainer">
+    <EntitySet Name="Departamento" EntityType="InfoClientesModel.Store.Departamento" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Municipio" EntityType="InfoClientesModel.Store.Municipio" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pais" EntityType="InfoClientesModel.Store.Pais" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="InfoClientesModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Vendedor" EntityType="InfoClientesModel.Store.Vendedor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Clientes" EntityType="InfoClientesModel.Store.Clientes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CuposCliente" EntityType="InfoClientesModel.Store.CuposCliente" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Visitas" EntityType="InfoClientesModel.Store.Visitas" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_CuposCliente_Clientes" Association="InfoClientesModel.Store.FK_CuposCliente_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="CuposCliente" EntitySet="CuposCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitas_Clientes" Association="InfoClientesModel.Store.FK_Visitas_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Visitas" EntitySet="Visitas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitas_Vendedor" Association="InfoClientesModel.Store.FK_Visitas_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Visitas" EntitySet="Visitas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="DpCodDpto" />
+    </Key>
+    <Property Name="DpPais" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="DpCodDpto" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="DpNomDpto" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Municipio">
+    <Key>
+      <PropertyRef Name="MnIdMunicipio" />
+    </Key>
+    <Property Name="MnDepartamento" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="MnIdMunicipio" Type="varchar" Nullable="false" MaxLength="6" />
+    <Property Name="MnCodMunicipio" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="MnNombreMunicipio" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Pais">
+    <Key>
+      <PropertyRef Name="PsCodPais" />
+    </Key>
+    <Property Name="PsCodPais" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="PsNomPais" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PsCodIso" Type="varchar" Nullable="false" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Vendedor">
+    <Key>
+      <PropertyRef Name="VdDocumento" />
+    </Key>
+    <Property Name="VdDocumento" Type="bigint" Nullable="false" />
+    <Property Name="VdNombresApe" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="VdFechaCrea" Type="datetime" Nullable="false" />
+    <Property Name="VdDireccion" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="VdTelefono" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="ClNIt" />
+    </Key>
+    <Property Name="ClNIt" Type="varchar" Nullable="false" MaxLength="900" />
+    <Property Name="ClNombresApe" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="ClDireccion" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="ClTel" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="MnIdMunicipio" Type="varchar" Nullable="false" MaxLength="6" />
+    <Property Name="ClCupo" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="ClSaldoCupo" Type="decimal" Nullable="true" Precision="18" Scale="4" />
+    <Property Name="ClPorceVisitas" Type="decimal" Nullable="true" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="CuposCliente">
+    <Key>
+      <PropertyRef Name="CcSec" />
+    </Key>
+    <Property Name="CcSec" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CcClNit" Type="varchar" Nullable="false" MaxLength="900" />
+    <Property Name="CcValor" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="CcFecha" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Visitas">
+    <Key>
+      <PropertyRef Name="VsSec" />
+    </Key>
+    <Property Name="VsSec" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VsFeha" Type="datetime" Nullable="false" />
+    <Property Name="VsValorNeto" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="VsValorVisita" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="VsObservacion" Type="varchar(max)" Nullable="false" />
+    <Property Name="ClNit" Type="varchar" Nullable="false" MaxLength="900" />
+    <Property Name="VdDocumento" Type="bigint" Nullable="false" />
+    <Property Name="VsIdMuni" Type="varchar" Nullable="true" MaxLength="6" />
+  </EntityType>
+  <Association Name="FK_CuposCliente_Clientes">
+    <End Role="Clientes" Type="InfoClientesModel.Store.Clientes" Multiplicity="1" />
+    <End Role="CuposCliente" Type="InfoClientesModel.Store.CuposCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="ClNIt" />
+      </Principal>
+      <Dependent Role="CuposCliente">
+        <PropertyRef Name="CcClNit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitas_Clientes">
+    <End Role="Clientes" Type="InfoClientesModel.Store.Clientes" Multiplicity="1" />
+    <End Role="Visitas" Type="InfoClientesModel.Store.Visitas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="ClNIt" />
+      </Principal>
+      <Dependent Role="Visitas">
+        <PropertyRef Name="ClNit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitas_Vendedor">
+    <End Role="Vendedor" Type="InfoClientesModel.Store.Vendedor" Multiplicity="1" />
+    <End Role="Visitas" Type="InfoClientesModel.Store.Visitas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VdDocumento" />
+      </Principal>
+      <Dependent Role="Visitas">
+        <PropertyRef Name="VdDocumento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

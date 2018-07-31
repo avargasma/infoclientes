@@ -1,0 +1,31 @@
+﻿
+<script src="~/Scripts/Angular/Services/RptVisitasXciudadService.js"></script>
+<script src="~/Scripts/Angular/Controllers/RptVisitasXciudadController.js"></script>
+
+@{
+    ViewBag.Title = "InfoClientes | Reporte visitas por ciudad";
+}
+<div style="padding-top:10%" ng-controller="CtrlRptVisitasXciudad">
+    <h2 class="tituloFormulario">Informe | Visitas por ciudad</h2>
+    <br />
+    <!--<div class="form-inline" style="width:100%">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Parámetros de consulta</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="fechaIni">Fecha inicio</label>
+                    <input class="form-control" id="fechaIni" type="date" autofocus ng-model="fechaIni" />                    
+                </div>
+                <div class="form-group">
+                    <label for="fechaFin">Fecha fin</label>
+                    <input class="form-control" id="fechaFin" type="date" autofocus ng-model="fechaFin" />
+                </div>   
+                <div class="form-group">
+                    <br />
+                    <button type="submit" class="btn btn-primary mb-2" value="Consultar" id="btnConsultar" ng-click="Consultar()">Consultar</button>
+                </div>                  
+            </div>
+        </div>
+    </div>-->
+    <div id="chart" dx-chart="chartOptions"></div>      
+</div>

@@ -1,0 +1,160 @@
+﻿<script src="~/Scripts/Angular/Controllers/ClientesController.js"></script>
+<script src="~/Scripts/Angular/Services/ClientesService.js"></script>
+@{
+    ViewBag.Title = "InfoClientes | Clientes";
+}
+<div  style="padding-top:10%" ng-controller="CtrlClientes">
+    <h2 class="tituloFormulario">Formulario para la creación y edición de clientes</h2>
+    <br />
+    <div class="form-inline"  id="form">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Datos del cliente</div>
+            <div class="panel-body" ng-style="styleEdit">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label>Nit *</label>
+                        <div class="input-group">
+                            <input class="form-control" id="nit" ng-disabled="InhabilitaCampoCod" maxlength="18" auto-focus="{{ focusCod }}" type="text" autofocus ng-model="nitCliente" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button"  ng-click="BuscarCliente(nitCliente)">Buscar</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <label>Nombre completo *</label>
+                        <input class="form-control" maxlength="300" type="text" ng-model="nomCliente" auto-focus="{{ focusNom }}" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Teléfono *</label>
+                        <input class="form-control" id="tel" maxlength="15" type="tel" ng-model="telCliente" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Dirección *</label>
+                        <input class="form-control" maxlength="500" type="text" ng-model="dirCliente" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Cupo máximo</label>
+                        <input class="form-control" id="copoMax" type="text" ng-blur="ValidarCupoMax(cupoMax)" ng-model="cupoMax" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>% visitas</label>
+                        <input class="form-control" id="txtPorceVisitas" type="text" ng-model="pocerVisCliente" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Saldo Cupo</label>
+                        <input class="form-control" maxlength="18" ng-disabled="{{true}}" type="number" ng-model="saldoCupCLiente" />
+                    </div>
+                </div>
+                <div class="row">
+                    <!--<div class="col-sm-4">
+                        <label>Cupo *</label>
+                        <input class="form-control" maxlength="18" ng-disabled="inhabilitaCampoCupones" type="number" ng-model="cupoCliente" />
+                    </div>-->                
+                    
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label for="cosIso">País *</label>
+                        <select class="form-control" ng-change="listarDptoXpais(codPais)" ng-model="codPais" ng-options="obj.PsCodPais as obj.PsNomPais for obj in paises">
+                            <option value="">-- Seleccione el país --</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="cosIso">Departamento *</label>
+                        <select class="form-control" ng-change="listarMunisXdpto(codDptoMuni)" ng-model="codDptoMuni" ng-options="obj.DpCodDpto as obj.DpNomDpto for obj in dptos">
+                            <option value="">-- Seleccione el departamento --</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="cosIso">Municipio *</label>
+                        <select class="form-control" ng-model="codMuni" ng-options="obj.MnIdMunicipio as obj.MnNombreMunicipio for obj in munis">
+                            <option value="">-- Seleccione el municipio --</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div style="float: right;">
+                    <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" ng-click="AddUpdateCliente()" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" value="Limpiar" ng-click="ClearFields()" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        $(document).ready(function () {
+
+            $('#nit').keydown(function (e) {
+                if (e.which != 13) {
+                    PermiteSoloNumeros(e);
+                }
+            });
+            $('#tel').keydown(function (e) {
+                if (e.which != 13) {
+                    PermiteSoloNumeros(e);
+                }
+            }); 
+
+            $('#btnCancel').click(function () {
+                $("#nit").focus();
+            });
+
+            $('#txtPorceVisitas').bind('keypress', function (e) {
+                var txtVal = $("#txtPorceVisitas").val();
+                if (txtVal<0 || txtVal>100) {
+                    return false;
+                }
+                var char = (e.which) ? e.which : e.keyCode;
+                if (char == 46 && txtVal.indexOf('.') != -1) 
+                    return false;
+                
+                if (char != 43 && char > 31 && (char < 48 || char > 57)) {
+                    return false;
+                } else {
+                    txtVal = txtVal.toString() + "" + e.key.toString();
+                    if (txtVal < 0 || txtVal > 100) {
+                        $("#txtPorceVisitas").val(100);
+                        return false;
+                    }
+                    return true;
+                }
+            })
+
+            jQuery.extend(jQuery.expr[':'], {
+                focusable: function (el, index, selector) {
+                    return $(el).is('a, button, :input, [tabindex]');
+                }
+            });
+
+            $(document).on('keypress', 'input,select', function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    // Get all focusable elements on the page
+                    var $canfocus = $(':focusable');
+                    var index = $canfocus.index(this) + 1;
+                    if (index >= $canfocus.length) index = 0;
+                    $canfocus.eq(index).focus();
+                }
+            });
+
+
+            function PermiteSoloNumeros(e) {
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+                    // Allow: Ctrl+A, Command+A
+               (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: home, end, left, right, down, up
+               (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            }
+
+        });
+    </script>

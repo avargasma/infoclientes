@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="InfoClientesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="InfoClientesModelStoreContainer">
+    <EntitySet Name="Departamento" EntityType="InfoClientesModel.Store.Departamento" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Municipio" EntityType="InfoClientesModel.Store.Municipio" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pais" EntityType="InfoClientesModel.Store.Pais" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="InfoClientesModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Vendedor" EntityType="InfoClientesModel.Store.Vendedor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Clientes" EntityType="InfoClientesModel.Store.Clientes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CuposCliente" EntityType="InfoClientesModel.Store.CuposCliente" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Visitas" EntityType="InfoClientesModel.Store.Visitas" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_CuposCliente_Clientes" Association="InfoClientesModel.Store.FK_CuposCliente_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="CuposCliente" EntitySet="CuposCliente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitas_Clientes" Association="InfoClientesModel.Store.FK_Visitas_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Visitas" EntitySet="Visitas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitas_Vendedor" Association="InfoClientesModel.Store.FK_Visitas_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Visitas" EntitySet="Visitas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="DpCodDpto" />
+    </Key>
+    <Property Name="DpPais" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="DpCodDpto" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="DpNomDpto" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Municipio">
+    <Key>
+      <PropertyRef Name="MnIdMunicipio" />
+    </Key>
+    <Property Name="MnDepartamento" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="MnIdMunicipio" Type="varchar" Nullable="false" MaxLength="6" />
+    <Property Name="MnCodMunicipio" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="MnNombreMunicipio" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Pais">
+    <Key>
+      <PropertyRef Name="PsCodPais" />
+    </Key>
+    <Property Name="PsCodPais" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="PsNomPais" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="PsCodIso" Type="varchar" Nullable="false" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Vendedor">
+    <Key>
+      <PropertyRef Name="VdDocumento" />
+    </Key>
+    <Property Name="VdDocumento" Type="bigint" Nullable="false" />
+    <Property Name="VdNombresApe" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="VdFechaCrea" Type="datetime" Nullable="false" />
+    <Property Name="VdDireccion" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="VdTelefono" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="ClNIt" />
+    </Key>
+    <Property Name="ClNIt" Type="varchar" Nullable="false" MaxLength="900" />
+    <Property Name="ClNombresApe" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="ClDireccion" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="ClTel" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="MnIdMunicipio" Type="varchar" Nullable="false" MaxLength="6" />
+    <Property Name="ClCupo" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="ClSaldoCupo" Type="decimal" Nullable="true" Precision="18" Scale="4" />
+    <Property Name="ClPorceVisitas" Type="decimal" Nullable="true" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="CuposCliente">
+    <Key>
+      <PropertyRef Name="CcSec" />
+    </Key>
+    <Property Name="CcSec" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CcClNit" Type="varchar" Nullable="false" MaxLength="900" />
+    <Property Name="CcValor" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="CcFecha" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Visitas">
+    <Key>
+      <PropertyRef Name="VsSec" />
+    </Key>
+    <Property Name="VsSec" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VsFeha" Type="datetime" Nullable="false" />
+    <Property Name="VsValorNeto" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="VsValorVisita" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="VsObservacion" Type="varchar(max)" Nullable="false" />
+    <Property Name="ClNit" Type="varchar" Nullable="false" MaxLength="900" />
+    <Property Name="VdDocumento" Type="bigint" Nullable="false" />
+    <Property Name="VsIdMuni" Type="varchar" Nullable="true" MaxLength="6" />
+  </EntityType>
+  <Association Name="FK_CuposCliente_Clientes">
+    <End Role="Clientes" Type="InfoClientesModel.Store.Clientes" Multiplicity="1" />
+    <End Role="CuposCliente" Type="InfoClientesModel.Store.CuposCliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="ClNIt" />
+      </Principal>
+      <Dependent Role="CuposCliente">
+        <PropertyRef Name="CcClNit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitas_Clientes">
+    <End Role="Clientes" Type="InfoClientesModel.Store.Clientes" Multiplicity="1" />
+    <End Role="Visitas" Type="InfoClientesModel.Store.Visitas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="ClNIt" />
+      </Principal>
+      <Dependent Role="Visitas">
+        <PropertyRef Name="ClNit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitas_Vendedor">
+    <End Role="Vendedor" Type="InfoClientesModel.Store.Vendedor" Multiplicity="1" />
+    <End Role="Visitas" Type="InfoClientesModel.Store.Visitas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VdDocumento" />
+      </Principal>
+      <Dependent Role="Visitas">
+        <PropertyRef Name="VdDocumento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InfoClientesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Departamento">
+          <Key>
+            <PropertyRef Name="DpCodDpto" />
+          </Key>
+          <Property Name="DpPais" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DpCodDpto" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DpNomDpto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Municipio">
+          <Key>
+            <PropertyRef Name="MnIdMunicipio" />
+          </Key>
+          <Property Name="MnDepartamento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MnIdMunicipio" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MnCodMunicipio" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MnNombreMunicipio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="PsCodPais" />
+          </Key>
+          <Property Name="PsCodPais" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PsNomPais" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PsCodIso" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Vendedor">
+          <Key>
+            <PropertyRef Name="VdDocumento" />
+          </Key>
+          <Property Name="VdDocumento" Type="Int64" Nullable="false" />
+          <Property Name="VdNombresApe" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VdFechaCrea" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VdDireccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VdTelefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Visitas" Relationship="InfoClientesModel.FK_Visitas_Vendedor" FromRole="Vendedor" ToRole="Visitas" />
+        </EntityType>
+        <EntityContainer Name="dbInfoClientes" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departamento" EntityType="Self.Departamento" />
+          <EntitySet Name="Municipio" EntityType="Self.Municipio" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Vendedor" EntityType="Self.Vendedor" />
+          <EntitySet Name="Clientes" EntityType="InfoClientesModel.Clientes" />
+          <EntitySet Name="CuposCliente" EntityType="InfoClientesModel.CuposCliente" />
+          <AssociationSet Name="FK_CuposCliente_Clientes" Association="InfoClientesModel.FK_CuposCliente_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="CuposCliente" EntitySet="CuposCliente" />
+          </AssociationSet>
+          <EntitySet Name="Visitas" EntityType="InfoClientesModel.Visitas" />
+          <AssociationSet Name="FK_Visitas_Clientes" Association="InfoClientesModel.FK_Visitas_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Visitas" EntitySet="Visitas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitas_Vendedor" Association="InfoClientesModel.FK_Visitas_Vendedor">
+            <End Role="Vendedor" EntitySet="Vendedor" />
+            <End Role="Visitas" EntitySet="Visitas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="ClNIt" />
+          </Key>
+          <Property Name="ClNIt" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="false" />
+          <Property Name="ClNombresApe" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="ClDireccion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ClTel" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="MnIdMunicipio" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="ClCupo" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="ClSaldoCupo" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="ClPorceVisitas" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="CuposCliente" Relationship="InfoClientesModel.FK_CuposCliente_Clientes" FromRole="Clientes" ToRole="CuposCliente" />
+          <NavigationProperty Name="Visitas" Relationship="InfoClientesModel.FK_Visitas_Clientes" FromRole="Clientes" ToRole="Visitas" />
+        </EntityType>
+        <EntityType Name="CuposCliente">
+          <Key>
+            <PropertyRef Name="CcSec" />
+          </Key>
+          <Property Name="CcSec" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CcClNit" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="false" />
+          <Property Name="CcValor" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CcFecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Clientes" Relationship="InfoClientesModel.FK_CuposCliente_Clientes" FromRole="CuposCliente" ToRole="Clientes" />
+        </EntityType>
+        <Association Name="FK_CuposCliente_Clientes">
+          <End Type="InfoClientesModel.Clientes" Role="Clientes" Multiplicity="1" />
+          <End Type="InfoClientesModel.CuposCliente" Role="CuposCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="ClNIt" />
+            </Principal>
+            <Dependent Role="CuposCliente">
+              <PropertyRef Name="CcClNit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Visitas">
+          <Key>
+            <PropertyRef Name="VsSec" />
+          </Key>
+          <Property Name="VsSec" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VsFeha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VsValorNeto" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="VsValorVisita" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="VsObservacion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ClNit" Type="String" Nullable="false" MaxLength="900" FixedLength="false" Unicode="false" />
+          <Property Name="VdDocumento" Type="Int64" Nullable="false" />
+          <Property Name="VsIdMuni" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clientes" Relationship="InfoClientesModel.FK_Visitas_Clientes" FromRole="Visitas" ToRole="Clientes" />
+          <NavigationProperty Name="Vendedor" Relationship="InfoClientesModel.FK_Visitas_Vendedor" FromRole="Visitas" ToRole="Vendedor" />
+        </EntityType>
+        <Association Name="FK_Visitas_Clientes">
+          <End Type="InfoClientesModel.Clientes" Role="Clientes" Multiplicity="1" />
+          <End Type="InfoClientesModel.Visitas" Role="Visitas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="ClNIt" />
+            </Principal>
+            <Dependent Role="Visitas">
+              <PropertyRef Name="ClNit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitas_Vendedor">
+          <End Type="InfoClientesModel.Vendedor" Role="Vendedor" Multiplicity="1" />
+          <End Type="InfoClientesModel.Visitas" Role="Visitas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedor">
+              <PropertyRef Name="VdDocumento" />
+            </Principal>
+            <Dependent Role="Visitas">
+              <PropertyRef Name="VdDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="InfoClientesModelStoreContainer" CdmEntityContainer="dbInfoClientes">
+    <EntitySetMapping Name="Departamento">
+      <EntityTypeMapping TypeName="IsTypeOf(InfoClientesModel.Departamento)">
+        <MappingFragment StoreEntitySet="Departamento">
+          <ScalarProperty Name="DpCodDpto" ColumnName="DpCodDpto" />
+          <ScalarProperty Name="DpPais" ColumnName="DpPais" />
+          <ScalarProperty Name="DpNomDpto" ColumnName="DpNomDpto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Municipio">
+      <EntityTypeMapping TypeName="IsTypeOf(InfoClientesModel.Municipio)">
+        <MappingFragment StoreEntitySet="Municipio">
+          <ScalarProperty Name="MnIdMunicipio" ColumnName="MnIdMunicipio" />
+          <ScalarProperty Name="MnDepartamento" ColumnName="MnDepartamento" />
+          <ScalarProperty Name="MnCodMunicipio" ColumnName="MnCodMunicipio" />
+          <ScalarProperty Name="MnNombreMunicipio" ColumnName="MnNombreMunicipio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pais">
+      <EntityTypeMapping TypeName="IsTypeOf(InfoClientesModel.Pais)">
+        <MappingFragment StoreEntitySet="Pais">
+          <ScalarProperty Name="PsCodPais" ColumnName="PsCodPais" />
+          <ScalarProperty Name="PsNomPais" ColumnName="PsNomPais" />
+          <ScalarProperty Name="PsCodIso" ColumnName="PsCodIso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="IsTypeOf(InfoClientesModel.sysdiagrams)">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vendedor">
+      <EntityTypeMapping TypeName="IsTypeOf(InfoClientesModel.Vendedor)">
+        <MappingFragment StoreEntitySet="Vendedor">
+          <ScalarProperty Name="VdDocumento" ColumnName="VdDocumento" />
+          <ScalarProperty Name="VdNombresApe" ColumnName="VdNombresApe" />
+          <ScalarProperty Name="VdFechaCrea" ColumnName="VdFechaCrea" />
+          <ScalarProperty Name="VdDireccion" ColumnName="VdDireccion" />
+          <ScalarProperty Name="VdTelefono" ColumnName="VdTelefono" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="IsTypeOf(InfoClientesModel.Clientes)">
+        <MappingFragment StoreEntitySet="Clientes">
+          <ScalarProperty Name="ClNIt" ColumnName="ClNIt" />
+          <ScalarProperty Name="ClNombresApe" ColumnName="ClNombresApe" />
+          <ScalarProperty Name="ClDireccion" ColumnName="ClDireccion" />
+          <ScalarProperty Name="ClTel" ColumnName="ClTel" />
+          <ScalarProperty Name="MnIdMunicipio" ColumnName="MnIdMunicipio" />
+          <ScalarProperty Name="ClCupo" ColumnName="ClCupo" />
+          <ScalarProperty Name="ClSaldoCupo" ColumnName="ClSaldoCupo" />
+          <ScalarProperty Name="ClPorceVisitas" ColumnName="ClPorceVisitas" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CuposCliente">
+      <EntityTypeMapping TypeName="IsTypeOf(InfoClientesModel.CuposCliente)">
+        <MappingFragment StoreEntitySet="CuposCliente">
+          <ScalarProperty Name="CcSec" ColumnName="CcSec" />
+          <ScalarProperty Name="CcClNit" ColumnName="CcClNit" />
+          <ScalarProperty Name="CcValor" ColumnName="CcValor" />
+          <ScalarProperty Name="CcFecha" ColumnName="CcFecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visitas">
+      <EntityTypeMapping TypeName="IsTypeOf(InfoClientesModel.Visitas)">
+        <MappingFragment StoreEntitySet="Visitas">
+          <ScalarProperty Name="VsSec" ColumnName="VsSec" />
+          <ScalarProperty Name="VsFeha" ColumnName="VsFeha" />
+          <ScalarProperty Name="VsValorNeto" ColumnName="VsValorNeto" />
+          <ScalarProperty Name="VsValorVisita" ColumnName="VsValorVisita" />
+          <ScalarProperty Name="VsObservacion" ColumnName="VsObservacion" />
+          <ScalarProperty Name="ClNit" ColumnName="ClNit" />
+          <ScalarProperty Name="VdDocumento" ColumnName="VdDocumento" />
+          <ScalarProperty Name="VsIdMuni" ColumnName="VsIdMuni" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

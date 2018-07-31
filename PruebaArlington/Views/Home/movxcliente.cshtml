@@ -1,0 +1,56 @@
+﻿<script src="~/Scripts/Angular/Controllers/MovsXclienteController.js"></script>
+<script src="~/Scripts/Angular/Services/MovsXclienteService.js"></script>
+@{
+    ViewBag.Title = "InfoClientes | Reporte Movimientos";
+}
+
+<div style="padding-top:10%" ng-controller="CtrlRptMovXcliente">    
+    <h2 class="tituloFormulario">Informe | Visitas por cliente</h2>
+    <br />
+
+    <div class="form-inline" style="width:100%">
+        <div class="form-group">
+            <label for="nitCli">Documento del cliente</label>
+            <input class="form-control" id="nitCli" type="text" autofocus ng-model="nitCli" />
+        </div>
+        <div class="form-group">
+            <br />
+            <button type="submit" class="btn btn-primary mb-2" value="Consultar" id="btnConsultar" ng-click="ConsultarMovs(nitCli)">Consultar</button>
+        </div>
+        <br />
+        <br />
+        <div class="demo-container" style="height:350px">
+            <div id="gridContainer" dx-data-grid="dataGridOptions"></div>
+        </div>      
+    </div>    
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#nitCli').keydown(function (e) {
+            if (e.which != 13) {
+                PermiteSoloNumeros(e);
+            }
+        });
+        
+        $('#btnConsultar').click(function () {
+            var val = $('#nitCli').val();
+            if (val == "" || val == undefined) {
+                alert("Por favor digite el documento del cliente.");
+                $('#nitCli').focus();
+            }
+        });
+
+        function PermiteSoloNumeros(e) {
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                return;
+            }
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        }
+
+    });
+</script>

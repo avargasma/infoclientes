@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InfoClientesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="ClNIt" />
+    </Key>
+    <Property Name="ClNIt" Type="varchar" MaxLength="900" Nullable="false" />
+    <Property Name="ClNombresApe" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="ClDireccion" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="ClTel" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="MnIdMunicipio" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="ClCupo" Type="int" Nullable="false" />
+    <Property Name="ClSaldoCupo" Type="int" />
+    <Property Name="ClPorceVisitas" Type="decimal" Precision="2" Scale="2" />
+  </EntityType>
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="DpCodDpto" />
+    </Key>
+    <Property Name="DpPais" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="DpCodDpto" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="DpNomDpto" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Municipio">
+    <Key>
+      <PropertyRef Name="MnIdMunicipio" />
+    </Key>
+    <Property Name="MnDepartamento" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="MnIdMunicipio" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="MnCodMunicipio" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="MnNombreMunicipio" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pais">
+    <Key>
+      <PropertyRef Name="PsCodPais" />
+    </Key>
+    <Property Name="PsCodPais" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="PsNomPais" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PsCodIso" Type="varchar" MaxLength="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vendedor">
+    <Key>
+      <PropertyRef Name="VdDocumento" />
+    </Key>
+    <Property Name="VdDocumento" Type="bigint" Nullable="false" />
+    <Property Name="VdNombresApe" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="VdFechaCrea" Type="datetime" Nullable="false" />
+    <Property Name="VdDireccion" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="VdTelefono" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Visitas">
+    <Key>
+      <PropertyRef Name="VsSec" />
+    </Key>
+    <Property Name="VsSec" Type="int" Nullable="false" />
+    <Property Name="VsFeha" Type="datetime" Nullable="false" />
+    <Property Name="VsValorNeto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="VsValorVisita" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="VsObservacion" Type="varchar(max)" Nullable="false" />
+    <Property Name="ClNit" Type="varchar" MaxLength="900" Nullable="false" />
+    <Property Name="VdDocumento" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Departamento_Pais">
+    <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pais">
+        <PropertyRef Name="PsCodPais" />
+      </Principal>
+      <Dependent Role="Departamento">
+        <PropertyRef Name="DpPais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Municipio_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="Municipio" Type="Self.Municipio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DpCodDpto" />
+      </Principal>
+      <Dependent Role="Municipio">
+        <PropertyRef Name="MnDepartamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitas_Clientes">
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+    <End Role="Visitas" Type="Self.Visitas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clientes">
+        <PropertyRef Name="ClNIt" />
+      </Principal>
+      <Dependent Role="Visitas">
+        <PropertyRef Name="ClNit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visitas_Vendedor">
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="1" />
+    <End Role="Visitas" Type="Self.Visitas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vendedor">
+        <PropertyRef Name="VdDocumento" />
+      </Principal>
+      <Dependent Role="Visitas">
+        <PropertyRef Name="VdDocumento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InfoClientesModelStoreContainer">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departamento" EntityType="Self.Departamento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Municipio" EntityType="Self.Municipio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vendedor" EntityType="Self.Vendedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Visitas" EntityType="Self.Visitas" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Departamento_Pais" Association="Self.FK_Departamento_Pais">
+      <End Role="Pais" EntitySet="Pais" />
+      <End Role="Departamento" EntitySet="Departamento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Municipio_Departamento" Association="Self.FK_Municipio_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Municipio" EntitySet="Municipio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitas_Clientes" Association="Self.FK_Visitas_Clientes">
+      <End Role="Clientes" EntitySet="Clientes" />
+      <End Role="Visitas" EntitySet="Visitas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visitas_Vendedor" Association="Self.FK_Visitas_Vendedor">
+      <End Role="Vendedor" EntitySet="Vendedor" />
+      <End Role="Visitas" EntitySet="Visitas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,75 @@
+﻿<script src="~/Scripts/Angular/Controllers/RegVisitaController.js"></script>
+<script src="~/Scripts/Angular/Services/RegVisitaService.js"></script>
+@{
+    ViewBag.Title = "InfoClientes | Visitas";
+}
+<div style="padding-top:10%" ng-controller="CtrlRegVisita">
+    <h2 class="tituloFormulario">Formulario para el registro de visitas</h2>
+    <br />
+    <div class="form-inline" id="form">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Datos de la visita</div>
+            <div class="panel-body" ng-style="styleEdit">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label>Vendedor *</label>
+                        <select class="form-control" id="vd" autofocus ng-model="VdDocumento" ng-options="obj.VdDocumento as obj.VdNombresApe for obj in vendedores">
+                            <option value="">-- Seleccione el vendedor --</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-7">
+                        <label>Cliente *</label>
+                        <div class="dx-field">
+                            @*<div class="dx-field-value" style="width:100%">
+                                    <div dx-select-box="selectBoxSettings"></div>
+                                    <span ng-change="CupoDisponibleCliente(nitClienteActual)" data-ng-model="nitClienteActual" />
+                                </div>*@
+                            <select class="form-control" id="vd" ng-change="CargarDatosClienteSeleccionado(nitClienteActual)" ng-model="nitClienteActual" ng-options="obj.ClNIt as obj.ClNombresApe for obj in clientesReg">
+                                <option value="">-- Seleccione el cliente --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label>Valor neto visita *</label>
+                        <input class="form-control" maxlength="18" type="number" ng-disabled="!cargoCliente" ng-change="ValidarValorVisita(VsValorNeto)" ng-model="VsValorNeto" />
+                    </div>
+                    <div class="col-sm-3">
+                        <label>Valor visita  <i data-toggle="tooltip" title="El valor de la visita equivale al valor neto * porcentaje de visitas del cliente." class="glyphicon glyphicon-info-sign"></i></label>
+                        <input class="form-control" maxlength="18" ng-disabled="{{true}}" id="tt" type="number" ng-model="VsValorVisita" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Saldo actual</label>
+                        <input class="form-control" maxlength="18" ng-disabled="{{true}}" type="number" ng-model="cleinteSeleccionado.ClSaldoCupo" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Fecha</label>
+                        <input class="form-control" type="text" ng-disabled="{{true}}" value="{{fechaActual | date:'dd/MM/yyyy hh:mm a'}}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Observaciones *</label>
+                        <textarea class="form-control" rows="4" type="text" ng-model="VsObservacion"></textarea>
+                    </div>
+                </div>
+                <br />
+                <div style="float: right;">
+                    <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" ng-click="AddVisita()" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" value="Limpiar" ng-click="ClearFields()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnCancel").click(function () {
+            $("#vd").focus();
+        });
+        $('#tt').tooltip("dfklñgmdklmgkldmgklsd")
+    })
+
+</script>

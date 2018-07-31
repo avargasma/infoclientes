@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="InfoClientesModelStoreContainer" CdmEntityContainer="InfoClientesEntities">
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="InfoClientesModel.Clientes">
+        <MappingFragment StoreEntitySet="Clientes">
+          <ScalarProperty Name="ClNIt" ColumnName="ClNIt" />
+          <ScalarProperty Name="ClNombresApe" ColumnName="ClNombresApe" />
+          <ScalarProperty Name="ClDireccion" ColumnName="ClDireccion" />
+          <ScalarProperty Name="ClTel" ColumnName="ClTel" />
+          <ScalarProperty Name="MnIdMunicipio" ColumnName="MnIdMunicipio" />
+          <ScalarProperty Name="ClCupo" ColumnName="ClCupo" />
+          <ScalarProperty Name="ClSaldoCupo" ColumnName="ClSaldoCupo" />
+          <ScalarProperty Name="ClPorceVisitas" ColumnName="ClPorceVisitas" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departamento">
+      <EntityTypeMapping TypeName="InfoClientesModel.Departamento">
+        <MappingFragment StoreEntitySet="Departamento">
+          <ScalarProperty Name="DpPais" ColumnName="DpPais" />
+          <ScalarProperty Name="DpCodDpto" ColumnName="DpCodDpto" />
+          <ScalarProperty Name="DpNomDpto" ColumnName="DpNomDpto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Municipio">
+      <EntityTypeMapping TypeName="InfoClientesModel.Municipio">
+        <MappingFragment StoreEntitySet="Municipio">
+          <ScalarProperty Name="MnDepartamento" ColumnName="MnDepartamento" />
+          <ScalarProperty Name="MnIdMunicipio" ColumnName="MnIdMunicipio" />
+          <ScalarProperty Name="MnCodMunicipio" ColumnName="MnCodMunicipio" />
+          <ScalarProperty Name="MnNombreMunicipio" ColumnName="MnNombreMunicipio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pais">
+      <EntityTypeMapping TypeName="InfoClientesModel.Pais">
+        <MappingFragment StoreEntitySet="Pais">
+          <ScalarProperty Name="PsCodPais" ColumnName="PsCodPais" />
+          <ScalarProperty Name="PsNomPais" ColumnName="PsNomPais" />
+          <ScalarProperty Name="PsCodIso" ColumnName="PsCodIso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vendedor">
+      <EntityTypeMapping TypeName="InfoClientesModel.Vendedor">
+        <MappingFragment StoreEntitySet="Vendedor">
+          <ScalarProperty Name="VdDocumento" ColumnName="VdDocumento" />
+          <ScalarProperty Name="VdNombresApe" ColumnName="VdNombresApe" />
+          <ScalarProperty Name="VdFechaCrea" ColumnName="VdFechaCrea" />
+          <ScalarProperty Name="VdDireccion" ColumnName="VdDireccion" />
+          <ScalarProperty Name="VdTelefono" ColumnName="VdTelefono" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visitas">
+      <EntityTypeMapping TypeName="InfoClientesModel.Visitas">
+        <MappingFragment StoreEntitySet="Visitas">
+          <ScalarProperty Name="VsSec" ColumnName="VsSec" />
+          <ScalarProperty Name="VsFeha" ColumnName="VsFeha" />
+          <ScalarProperty Name="VsValorNeto" ColumnName="VsValorNeto" />
+          <ScalarProperty Name="VsValorVisita" ColumnName="VsValorVisita" />
+          <ScalarProperty Name="VsObservacion" ColumnName="VsObservacion" />
+          <ScalarProperty Name="ClNit" ColumnName="ClNit" />
+          <ScalarProperty Name="VdDocumento" ColumnName="VdDocumento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

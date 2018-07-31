@@ -1,0 +1,64 @@
+﻿<script src="~/Scripts/Angular/Controllers/AggCupoController.js"></script>
+<script src="~/Scripts/Angular/Services/AggCupoService.js"></script>
+@{
+    ViewBag.Title = "InfoClientes | Agregar Cupo";
+}
+
+<div style="padding-top:10%" ng-controller="CtrlCupos">
+    <h2 class="tituloFormulario">Formulario para agregar cupos a cientes</h2>
+    <br />
+    <div class="form-inline" style="width:100%">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Datos del registro</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <label for="codPais">Cliente *</label>
+                        <select class="form-control" id="vd" autofocus ng-change="CargarDatosClienteSeleccionado(nitCliente)" ng-model="nitCliente" ng-options="obj.ClNIt as obj.ClNombresApe for obj in clientesReg">
+                            <option value="">-- Seleccione el cliente --</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="valorCupo">Cupo máximo</label>
+                        <input class="form-control" maxlength="18" type="number" ng-disabled="{{true}}" ng-model="cupoMax"/>
+                    </div> 
+                    <div class="col-sm-2">
+                        <label for="valorCupo">Valor del cupo *</label>
+                        <input class="form-control" maxlength="18" type="text" ng-change="ValidarCupoMax(valorCupo)"  ng-model="valorCupo" id="valorCupo"  autocomplete="off" />
+                    </div>                    
+                </div>
+                <br />
+                <div style="float: right;">
+                    <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" ng-click="AddCupo()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        $(document).ready(function () {
+
+            $('#valorCupo').keydown(function (e) {
+                if (e.which != 13) {
+                    PermiteSoloNumeros(e);
+                }
+            });
+            
+            function PermiteSoloNumeros(e) {
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+                    // Allow: Ctrl+A, Command+A
+               (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: home, end, left, right, down, up
+               (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            }
+
+        });
+</script>
+

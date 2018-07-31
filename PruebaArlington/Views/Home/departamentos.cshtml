@@ -1,0 +1,77 @@
+﻿<script src="~/Scripts/Angular/Controllers/DptosController.js"></script>
+<script src="~/Scripts/Angular/Services/DptosService.js"></script>
+@{
+    ViewBag.Title = "InfoClientes | Departamentos";
+}
+
+<div  style="padding-top:10%" ng-controller="CtrlDptos">
+    <h2 class="tituloFormulario">Parámetros del sistema | Departamentos</h2>
+    <br />
+    <div class="precarga" ng-hide="dptos">
+        <i class="fa fa-refresh fa-spin fa-5x"></i>
+    </div>
+    <div class="form-inline" style="width:100%">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Datos del departamento</div>
+            <div class="panel-body"  ng-style="styleEdit">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label for="codPais">Código Departamento *</label>
+                        <input class="form-control" ng-disabled="InhabilitaCampoCod" maxlength="3" id="codDpto" auto-focus="{{ focusCod }}" type="text" autofocus ng-model="codDpto" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="nomPais">Nombre Departamento *</label>
+                        <input class="form-control" maxlength="100" type="text" ng-model="nomDpto" id="nomPais" auto-focus="{{ focusNom }}" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="cosIso">País *</label>
+                        <select class="form-control" ng-model="codPais" ng-options="obj.PsCodPais as obj.PsNomPais for obj in paises">
+                            <option value="">-- Seleccione el país --</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div style="float: right;">
+
+                    <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" ng-click="AddUpdateDpto()" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" value="Limpiar" ng-click="ClearFields()" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <h3>Lista de departamentos existentes</h3>
+    <div ng-show="dptos">
+        <input type="search" ng-model="buscador" class="form-control" placeholder="Digite cualquier criterio de busqueda"> <br>
+        <div class="col-sm-12">
+            <div class="col-sm-2"><h4 class="display-4">Cod Departamento</h4></div>
+            <div class="col-sm-6"><h4 class="display-4">Nombre Departamento</h4></div>
+            <div class="col-sm-2"><h4 class="display-4">Pais</h4></div>
+            <div class="col-sm-1"><h4 class="display-4">Editar</h4></div>
+            <div class="col-sm-1"><h4 class="display-4">Eliminar</h4></div>
+        </div>
+        <hr />
+        <div class="ScrollStyle">
+            <div ng-repeat="dpto in dptos | filter:buscador" class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-2" ng-bind="dpto.DpCodDpto"></div>
+                    <div class="col-sm-6" ng-bind="dpto.DpNomDpto"></div>
+                    <div class="col-sm-2" ng-bind="dpto.DpPais"></div>
+                    <div class="col-sm-1"><button ng-click="editDpto(dpto)" id="btnEditar" type="button" class="btn btn-primary">Editar</button></div>
+                    <div class="col-sm-1">
+                        <button confirmed-click="EliminaDpto(dpto)"
+                                ng-confirm-click="Seguro que desea eliminar el departamento {{pais.PsNomPais}}" type="button" class="btn btn-danger">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnCancel").click(function () {
+        $("#codDpto").focus();
+    });
+</script>

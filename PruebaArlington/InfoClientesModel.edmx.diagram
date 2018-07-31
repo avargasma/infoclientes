@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0ac264cf3f1a41859966a28cde5c12e7" Name="Diagram1">
+        <EntityTypeShape EntityType="InfoClientesModel.Departamento" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InfoClientesModel.Municipio" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InfoClientesModel.Pais" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InfoClientesModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InfoClientesModel.Vendedor" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InfoClientesModel.Clientes" Width="1.5" PointX="3.375" PointY="7" />
+        <EntityTypeShape EntityType="InfoClientesModel.CuposCliente" Width="1.5" PointX="5.625" PointY="7.5" />
+        <AssociationConnector Association="InfoClientesModel.FK_CuposCliente_Clientes" />
+        <EntityTypeShape EntityType="InfoClientesModel.Visitas" Width="1.5" PointX="9" PointY="3.875" />
+        <AssociationConnector Association="InfoClientesModel.FK_Visitas_Clientes" />
+        <AssociationConnector Association="InfoClientesModel.FK_Visitas_Vendedor" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

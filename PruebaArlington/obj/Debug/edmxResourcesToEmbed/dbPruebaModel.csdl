@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbPruebaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Productos">
+    <Key>
+      <PropertyRef Name="CodProd" />
+    </Key>
+    <Property Name="CodProd" Type="Int32" Nullable="false" />
+    <Property Name="NomProd" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Existencia" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaMod" Type="DateTime" Precision="3" />
+    <Property Name="Activo" Type="Boolean" />
+  </EntityType>
+  <EntityContainer Name="dbPruebaEntidad" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Productos" EntityType="Self.Productos" />
+  </EntityContainer>
+</Schema>
