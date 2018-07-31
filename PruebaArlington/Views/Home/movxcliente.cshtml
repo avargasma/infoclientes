@@ -21,7 +21,10 @@
         <br />
         <div class="demo-container" style="height:350px">
             <div id="gridContainer" dx-data-grid="dataGridOptions"></div>
-        </div>      
+        </div>  
+        <div class="demo-container">
+            <div id="gridContainer"></div>
+        </div>
     </div>    
 </div>
 <script>
@@ -34,12 +37,65 @@
         });
         
         $('#btnConsultar').click(function () {
+            llenaGrilla([]);
             var val = $('#nitCli').val();
             if (val == "" || val == undefined) {
                 alert("Por favor digite el documento del cliente.");
                 $('#nitCli').focus();
+            } else {
+                var movs = new DevExpress.data.CustomStore({
+                    load: function (loadOptions) {
+                        var deferred = $.Deferred(),
+                            args = {};
+
+
+                        args.nitCliente = val;
+
+                        $.ajax({
+                            url: "../MovXcliente/listarMovs",
+                            dataType: "json",
+                            data: args,
+                            success: function (result) {
+                                deferred.resolve(result[0], { totalCount: result.length });
+                                if (result.length == 0 || result.length == null || result.length == undefined) {
+                                    alert("No se encontraron visitas.");
+                                }
+                            },
+                            error: function () {
+                                deferred.reject("Data Loading Error");
+                            },
+                            timeout: 5000
+                        });
+
+                        return deferred.promise();
+                    }
+                });
+
+                llenaGrilla(movs);
             }
         });
+
+        function llenaGrilla(movs) {
+            $("#gridContainer").dxDataGrid({
+                dataSource: {
+                    store: movs
+                },
+                remoteOperations: {
+                    sorting: true,
+                    paging: true
+                },
+                paging: {
+                    pageSize: 12
+                },
+                pager: {
+                    showPageSizeSelector: true,
+                    allowedPageSizes: [8, 12, 20]
+                },
+                columns: [
+                    "ClNombresApe", "NomVendedor", "VsFeha", "VsValorNeto", "VsValorVisita", "Observaciones"
+                ]
+            }).dxDataGrid("instance");
+        }
 
         function PermiteSoloNumeros(e) {
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||

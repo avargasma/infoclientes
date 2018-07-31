@@ -362,10 +362,7 @@
     <Content Include="Views\Home\movxcliente.cshtml" />
     <Content Include="Views\Home\agregarcupo.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\AgregarCupo\" />
-    <Folder Include="Views\Vendedores\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
