@@ -11,4 +11,15 @@
         return response;
     };
 
+    this.getCliente = function (nitCliente) {
+        var response = $http({
+            method: "post",
+            url: "/Clientes/consultaClienteById",
+            params: {
+                nitCliente: nitCliente
+            }
+        });
+        return response;
+    }
+
 })

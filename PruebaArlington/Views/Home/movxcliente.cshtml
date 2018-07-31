@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
             <br />
-            <button type="submit" class="btn btn-primary mb-2" value="Consultar" id="btnConsultar" ng-click="ConsultarMovs(nitCli)">Consultar</button>
+            <button type="submit" class="btn btn-primary mb-2" value="Consultar" id="btnConsultar" ng-click="BuscarCliente(nitCli)">Consultar</button>
         </div>
         <br />
         <br />
@@ -29,7 +29,7 @@
 </div>
 <script>
     $(document).ready(function () {
-
+        llenaGrilla([]);
         $('#nitCli').keydown(function (e) {
             if (e.which != 13) {
                 PermiteSoloNumeros(e);
@@ -59,6 +59,8 @@
                                 deferred.resolve(result[0], { totalCount: result.length });
                                 if (result.length == 0 || result.length == null || result.length == undefined) {
                                     alert("No se encontraron visitas.");
+                                } else if (result[0].existeCliente === false) {
+                                    alert("El cliente con número de docuemnto "+ val + " no existe.");
                                 }
                             },
                             error: function () {
@@ -91,9 +93,42 @@
                     showPageSizeSelector: true,
                     allowedPageSizes: [8, 12, 20]
                 },
-                columns: [
-                    "ClNombresApe", "NomVendedor", "VsFeha", "VsValorNeto", "VsValorVisita", "Observaciones"
-                ]
+                columns: [{
+                            dataField: "ClNombresApe",
+                            caption: "Ciente"
+                        },{
+                            dataField: "NomVendedor",
+                            caption: "Vendedor"
+                        },{
+                            dataField: "VsFeha",
+                            dataType: "date",
+                            caption: "Fecha visita"
+                        }, {
+                            dataField: "VsValorNeto",
+                            dataType: "number",
+                            format: "currency",
+                            caption: "Valor neto"
+                        }, {
+                            dataField: "VsValorVisita",
+                            dataType: "number",
+                            format: "currency",
+                            caption: "Valor visita"
+                        }, {
+                            dataField: "Observaciones"
+                        }],
+                summary: {
+                    totalItems: [{
+                        column: "VsValorNeto",
+                        summaryType: "sum",
+                        valueFormat: "currency",
+                        displayFormat: "Suma: {0}"
+                    }, {
+                        column: "VsValorVisita",
+                        summaryType: "sum",
+                        valueFormat: "currency",
+                        displayFormat: "Suma: {0}"
+                    }]
+                }
             }).dxDataGrid("instance");
         }
 

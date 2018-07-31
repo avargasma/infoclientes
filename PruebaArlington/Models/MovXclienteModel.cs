@@ -13,6 +13,8 @@ namespace PruebaArlington.Models
         public string VsFeha { get; set; }
         public decimal VsValorVisita { get; set; }
         public string Observaciones { get; set; }
-        public DateTime fechaSinFormat { get; set; }
+        public DateTime fechaSinFormat { get; set; }        
+        public Nullable<bool> existeCliente { get; set; }
+
     }
 }

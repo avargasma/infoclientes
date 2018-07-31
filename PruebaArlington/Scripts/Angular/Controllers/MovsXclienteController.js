@@ -3,6 +3,28 @@
     $scope.clic = function (nitCli) {
         alert(nitCli);
     }
+
+
+    $scope.BuscarCliente = function (nitcliente) {
+        debugger;
+        //var getData = MovsXclientService.getCliente(nitcliente);
+        //getData.then(function (d) {
+        //    $scope.currentCliente = d.data;
+        //    if ($scope.currentCliente.ClNIt == null) {
+        //        alert("EL usuario con núemro de documento " + nitcliente + " no existe.");
+        //        $scope.currentCliente = {};
+        //        $scope.focusCod = true;
+        //        return;
+        //    }
+        //    $scope.nitCliente = $scope.currentCliente.ClNIt;
+
+        //},
+        //    function () {
+        //        alert('Error..');
+        //    });
+    }
+
+
     $scope.ConsultarMovs = function (nitCliente) {
         if (nitCliente == "" || nitCliente == undefined) {
             return;

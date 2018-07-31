@@ -26,8 +26,16 @@ namespace PruebaArlington.Controllers
             try
             {
 
-                string nitCryp = cl.DESEncrypt(nitCliente);               
-                var response = (from visitas in db.Visitas
+                string nitCryp = cl.DESEncrypt(nitCliente);
+                List<Models.MovXclienteModel> response = new List<Models.MovXclienteModel>();
+                if (!ExisteCliente(nitCryp))
+                {
+                    Models.MovXclienteModel mdl = new Models.MovXclienteModel();
+                    mdl.existeCliente = false;
+                    response.Add(mdl);
+                    return Json(response, JsonRequestBehavior.AllowGet);
+                }
+                response = (from visitas in db.Visitas
                                 join clientes in db.Clientes on visitas.ClNit equals clientes.ClNIt into ps
                                 from p in ps.DefaultIfEmpty()
                                 join vendedor in db.Vendedor on visitas.VdDocumento equals vendedor.VdDocumento into ps1
@@ -36,18 +44,38 @@ namespace PruebaArlington.Controllers
                                 select new Models.MovXclienteModel { ClNombresApe = p.ClNombresApe, NomVendedor = p1.VdNombresApe,   fechaSinFormat= visitas.VsFeha,
                                     VsValorNeto = visitas.VsValorNeto, VsValorVisita = visitas.VsValorVisita,
                                     Observaciones = visitas.VsObservacion  }).ToList();
-                foreach (Models.MovXclienteModel it in response)
+
+                if (response.Count>0)
                 {
-                    it.VsFeha = it.fechaSinFormat.ToString("dd/MM/yyyy hh:mm tt");
-                }
+                    foreach (Models.MovXclienteModel it in response)
+                    {
+                        it.VsFeha = it.fechaSinFormat.ToString("dd/MM/yyyy hh:mm tt");
+                    }
+                }else
+                {
+                    Models.MovXclienteModel mdl = new Models.MovXclienteModel();
+                    mdl.existeCliente = true;
+                    response.Add(mdl);
+                }                
                 JsonResult j = Json(response, JsonRequestBehavior.AllowGet);
                 return j;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return null;
             }
         }
+        private bool ExisteCliente(string nitCliente)
+        {
+            try
+            {
+                return db.Clientes.Count(e => e.ClNIt == nitCliente) > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
     }
 }
